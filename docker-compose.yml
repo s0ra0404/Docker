@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  mysql:
+    build: ./mysql
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'Test'
+
+  php:
+    build: ./php
+    volumes:
+      - ./htdocs:/var/www/html
+    restart: always
+    ports:
+      - '80:80'
+    depends_on:
+      - mysql
+
+volumes:
+  db_data: {}
